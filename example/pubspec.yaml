@@ -29,6 +29,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  form_utilities:
+    git: https://github.com/rmortes/flutter_form_utilities.git
 
 
   # The following adds the Cupertino Icons font to your application.

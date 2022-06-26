@@ -1,6 +1,6 @@
 part of 'num_validator.dart';
 
-class AsNum extends NumValidator<num> {
+class ValNum extends NumValidator<num> {
   @override
   get invalidMessage => "Value must be a number";
   @override

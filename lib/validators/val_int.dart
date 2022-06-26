@@ -1,15 +1,10 @@
 part of 'num_validator.dart';
 
-class AsDouble extends NumValidator<double> {
+class ValInt extends NumValidator<int> {
   @override
-  get invalidMessage => "Value must be a double";
+  get invalidMessage => "Value must be an integer";
   @override
-  tryParse(String value) {
-    if (int.tryParse(value) != null) {
-      return null;
-    }
-    return double.tryParse(value);
-  }
+  tryParse(String value) => int.tryParse(value);
 
   @override
   Validator gt(gt) => (String value) => super._gt(value, gt);
@@ -43,11 +38,11 @@ class AsDouble extends NumValidator<double> {
   Validator isValid() => (String value) => super._isValid(value);
 
   @override
-  Validator oneOf(List<double> oneOf) =>
+  Validator oneOf(List<int> oneOf) =>
       (String value) => super._oneOf(value, oneOf);
 
   @override
-  Validator notOneOf(List<double> notOneOf) =>
+  Validator notOneOf(List<int> notOneOf) =>
       (String value) => super._notOneOf(value, notOneOf);
 
   @override

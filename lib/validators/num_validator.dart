@@ -1,8 +1,8 @@
 import 'package:form_utilities/validation.dart';
 
-part 'as_num.dart';
-part 'as_double.dart';
-part 'as_int.dart';
+part 'val_num.dart';
+part 'val_double.dart';
+part 'val_int.dart';
 
 abstract class NumValidator<T extends num> {
   T? tryParse(String value);

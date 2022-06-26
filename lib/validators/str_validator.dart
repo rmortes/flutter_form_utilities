@@ -251,4 +251,8 @@ class ValStr {
       val.matches(value, pattern) ? null : "Value must match $pattern";
   Validator notMatches(String pattern) => (String value) =>
       val.matches(value, pattern) ? "Value must not match $pattern" : null;
+  Validator isEmpty() =>
+      (String value) => value.isEmpty ? null : "Value must be empty";
+  Validator isNotEmpty() =>
+      (String value) => value.isNotEmpty ? null : "Value must not be empty";
 }

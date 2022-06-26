@@ -21,8 +21,8 @@ enum UUIDVersion {
 }
 
 enum ISBNVersion {
-  isbnV10(4),
-  isbnV13(6);
+  isbnV10(10),
+  isbnV13(13);
 
   final int version;
 
@@ -36,6 +36,17 @@ class ValStr {
       (str) => val.contains(str, notContains)
           ? "Value must not contain $notContains"
           : null;
+
+  Validator startsWith(String startsWith) => (str) =>
+      str.startsWith(startsWith) ? null : "Value must start with $startsWith";
+  Validator notStartsWith(String notStartsWith) =>
+      (str) => str.startsWith(notStartsWith)
+          ? "Value must not start with $notStartsWith"
+          : null;
+  Validator endsWith(String endsWith) =>
+      (str) => str.endsWith(endsWith) ? null : "Value must end with $endsWith";
+  Validator notEndsWith(String notEndsWith) => (str) =>
+      str.endsWith(notEndsWith) ? "Value must not end with $notEndsWith" : null;
   Validator eq(String eq) => (String value) =>
       val.equals(value, eq) ? null : "Value must be equal to $eq";
   Validator neq(String neq) => (String value) =>
@@ -46,10 +57,10 @@ class ValStr {
   Validator isNotAlpha() => (String value) => val.isAlpha(value)
       ? "Value must not only contain upper or lowercase letters"
       : null;
-  Validator isAlphaNumeric() => (String value) => val.isAlphanumeric(value)
+  Validator isAlphanumeric() => (String value) => val.isAlphanumeric(value)
       ? null
       : "Value must only contain letters and numbers";
-  Validator isNotAlphaNumeric() => (String value) => val.isAlphanumeric(value)
+  Validator isNotAlphanumeric() => (String value) => val.isAlphanumeric(value)
       ? "Value must not only contain letters or numbers"
       : null;
   Validator isAscii() => (String value) =>
@@ -111,6 +122,14 @@ class ValStr {
   Validator isNotHex() => (String value) => val.isHexadecimal(value)
       ? "Value must not be a hexadecimal string"
       : null;
+  Validator is0x() => (String value) =>
+      value.startsWith("0x") && val.isHexadecimal(value.replaceFirst("0x", ""))
+          ? null
+          : "Value must be a 0x hexadecimal string";
+  Validator isNot0x() => (String value) =>
+      value.startsWith("0x") && val.isHexadecimal(value.replaceFirst("0x", ""))
+          ? "Value must not be a 0x hexadecimal string"
+          : null;
   Validator isHexColor() => (String value) =>
       val.isHexColor(value) ? null : "Value must be a hexadecimal color";
   Validator isNotHexColor() => (String value) =>
@@ -121,40 +140,40 @@ class ValStr {
       (String value) => val.isIn(value, values) ?? true
           ? "Value must not be one of $values"
           : null;
-  Validator isIP(IPVersion? v) => (String value) =>
+  Validator isIP([IPVersion? v]) => (String value) =>
       val.isIP(value, v?.version) ? null : "Value must be a valid IP address";
-  Validator isNotIP(IPVersion? v) =>
+  Validator isNotIP([IPVersion? v]) =>
       (String value) => val.isIP(value, v?.version)
           ? "Value must not be a valid IP address"
           : null;
-  Validator isISBN(ISBNVersion? v) => (String value) =>
+  Validator isISBN([ISBNVersion? v]) => (String value) =>
       val.isISBN(value, v?.version) ? null : "Value must be a valid ISBN";
-  Validator isNotISBN(ISBNVersion? v) => (String value) =>
+  Validator isNotISBN([ISBNVersion? v]) => (String value) =>
       val.isISBN(value, v?.version) ? "Value must not be a valid ISBN" : null;
   Validator isJSON() => (String value) =>
       val.isJSON(value) ? null : "Value must be a valid JSON string";
   Validator isNotJSON() => (String value) =>
       val.isJSON(value) ? "Value must not be a valid JSON string" : null;
-  Validator isLength(int min, int max) =>
+  Validator lengthBetween(int min, int max) =>
       (String value) => val.isLength(value, min, max)
           ? null
           : "Value must be between $min and $max characters";
-  Validator isNotLength(int min, int max) =>
+  Validator lengthNotBetween(int min, int max) =>
       (String value) => val.isLength(value, min, max)
           ? "Value must not be between $min and $max characters"
           : null;
-  Validator isLengthBiggerThan(int min) =>
+  Validator lengthBiggerThan(int min) =>
       (String value) => val.isLength(value, min)
           ? null
           : "Value must be at least $min characters";
-  Validator isLengthSmallerThan(int max) =>
+  Validator lengthSmallerThan(int max) =>
       (String value) => val.isLength(value, 0, max)
           ? null
           : "Value must be at most $max characters";
-  Validator isLowerCase() => (String value) =>
-      val.isLowercase(value) ? null : "Value must be lower case";
-  Validator isNotLowerCase() => (String value) =>
-      val.isLowercase(value) ? "Value must not be lower case" : null;
+  Validator isLowercase() => (String value) =>
+      val.isLowercase(value) ? null : "Value must be lowercase";
+  Validator isNotLowercase() => (String value) =>
+      val.isLowercase(value) ? "Value must not be lowercase" : null;
   Validator isMongoId() => (String value) =>
       val.isMongoId(value) ? null : "Value must be a valid MongoDB ObjectId";
   Validator isNotMongoId() => (String value) => val.isMongoId(value)
@@ -165,10 +184,6 @@ class ValStr {
   Validator notContainsMultibyte() => (String value) => val.isMultibyte(value)
       ? "Value must not contain multibyte characters"
       : null;
-  Validator isNumeric() =>
-      (String value) => val.isNumeric(value) ? null : "Value must be numeric";
-  Validator isNotNumeric() => (String value) =>
-      val.isNumeric(value) ? "Value must not be numeric" : null;
   Validator isPostalCode(String locale) =>
       (String value) => val.isPostalCode(value, locale)
           ? null
@@ -183,10 +198,14 @@ class ValStr {
       (String value) => val.isSurrogatePair(value)
           ? "Value must not contain surrogate pairs"
           : null;
-  Validator isUpperCase() => (String value) =>
-      val.isUppercase(value) ? null : "Value must be upper case";
-  Validator isNotUpperCase() => (String value) =>
-      val.isUppercase(value) ? "Value must not be upper case" : null;
+  Validator isUppercase() =>
+      (String value) => value.isEmpty || val.isUppercase(value)
+          ? null
+          : "Value must be uppercase";
+  Validator isNotUppercase() =>
+      (String value) => value.isNotEmpty && val.isUppercase(value)
+          ? "Value must not be uppercase"
+          : null;
   Validator isURL(
           {List<String?> protocols = const ['http', 'https', 'ftp'],
           bool requireTld = true,
@@ -223,10 +242,10 @@ class ValStr {
           )
               ? "Value must not be a valid URL"
               : null;
-  Validator isUUID(UUIDVersion? v) => (String value) =>
+  Validator isUUID([UUIDVersion? v]) => (String value) =>
       val.isUUID(value, v?.version) ? null : "Value must be a valid UUID";
 
-  Validator isNotUUID(UUIDVersion? v) => (String value) =>
+  Validator isNotUUID([UUIDVersion? v]) => (String value) =>
       val.isUUID(value, v?.version) ? "Value must not be a valid UUID" : null;
   Validator matches(String pattern) => (String value) =>
       val.matches(value, pattern) ? null : "Value must match $pattern";

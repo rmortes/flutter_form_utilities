@@ -23,7 +23,7 @@ ENV PATH=${PATH}:${ANDROID_HOME}/cmdline-tools/tools/bin:${ANDROID_HOME}/platfor
 # Flutter SDK
 # https://flutter.dev/docs/development/tools/sdk/releases?tab=linux
 ENV FLUTTER_CHANNEL="stable"
-ENV FLUTTER_VERSION="2.10.5"
+ENV FLUTTER_VERSION="3.0.3"
 # Set this variable as "enable" to auto config flutter web-server.
 # Make sure to use the needed channel and version for this.
 ENV FLUTTER_WEB="enable"

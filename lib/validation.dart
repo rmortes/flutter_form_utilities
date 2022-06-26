@@ -1,7 +1,10 @@
 typedef Validator = String? Function(String value);
+typedef ValidatorFunction = String? Function(String? value);
 
-Validator validate(List<Validator> validators, {String? error}) {
-  return (String value) {
+ValidatorFunction validate(List<Validator> validators,
+    {String? error}) {
+  return (String? value) {
+    if (value == null) return null;
     for (var validator in validators) {
       final result = validator(value);
       if (result != null) {
@@ -13,8 +16,9 @@ Validator validate(List<Validator> validators, {String? error}) {
 }
 
 /// This helper joins some validators together so that only one of them needs to be satisfied.
-Validator or(List<Validator> validators, {String? error}) {
-  return (String value) {
+ValidatorFunction or(List<Validator> validators, {String? error}) {
+  return (String? value) {
+    if (value == null) return null;
     final errors = <String>[];
     for (var validator in validators) {
       final result = validator(value);
@@ -29,6 +33,6 @@ Validator or(List<Validator> validators, {String? error}) {
 }
 
 /// This helper joins some validators together so that all of them need to be satisfied.
-Validator and(List<Validator> validators, {String? error}) {
+ValidatorFunction and(List<Validator> validators, {String? error}) {
   return validate(validators, error: error);
 }

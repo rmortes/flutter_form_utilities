@@ -12,47 +12,57 @@ class ValDouble extends NumValidator<double> {
   }
 
   @override
-  Validator gt(gt) => (String value) => super._gt(value, gt);
+  Validator gt(gt, {String? error}) =>
+      (String value) => super._gt(value, gt, error: error);
   @override
-  Validator lt(lt) => (String value) => super._lt(value, lt);
+  Validator lt(lt, {String? error}) =>
+      (String value) => super._lt(value, lt, error: error);
 
   @override
-  Validator gte(gte) => (String value) => super._gte(value, gte);
+  Validator gte(gte, {String? error}) =>
+      (String value) => super._gte(value, gte, error: error);
 
   @override
-  Validator lte(lte) => (String value) => super._lte(value, lte);
+  Validator lte(lte, {String? error}) =>
+      (String value) => super._lte(value, lte, error: error);
 
   @override
-  Validator eq(eq) => (String value) => super._eq(value, eq);
+  Validator eq(eq, {String? error}) =>
+      (String value) => super._eq(value, eq, error: error);
 
   @override
-  Validator neq(neq) => (String value) => super._neq(value, neq);
+  Validator neq(neq, {String? error}) =>
+      (String value) => super._neq(value, neq, error: error);
 
   @override
-  Validator between(min, max) =>
-      (String value) => super._between(value, min, max);
+  Validator between(min, max, {String? error}) =>
+      (String value) => super._between(value, min, max, error: error);
 
   @override
-  Validator notBetween(min, max) =>
-      (String value) => super._notBetween(value, min, max);
+  Validator notBetween(min, max, {String? error}) =>
+      (String value) => super._notBetween(value, min, max, error: error);
 
   @override
-  Validator isNotValid() => (String value) => super._isNotValid(value);
+  Validator isNotValid({String? error}) =>
+      (String value) => super._isNotValid(value, error: error);
 
   @override
-  Validator isValid() => (String value) => super._isValid(value);
+  Validator isValid({String? error}) =>
+      (String value) => super._isValid(value, error: error);
 
   @override
-  Validator oneOf(List<double> oneOf) =>
-      (String value) => super._oneOf(value, oneOf);
+  Validator oneOf(List<double> oneOf, {String? error}) =>
+      (String value) => super._oneOf(value, oneOf, error: error);
 
   @override
-  Validator notOneOf(List<double> notOneOf) =>
-      (String value) => super._notOneOf(value, notOneOf);
+  Validator notOneOf(List<double> notOneOf, {String? error}) =>
+      (String value) => super._notOneOf(value, notOneOf, error: error);
 
   @override
-  Validator isNegative() => (String value) => super._isNegative(value);
+  Validator isNegative({String? error}) =>
+      (String value) => super._isNegative(value, error: error);
 
   @override
-  Validator isPositive() => (String value) => super._isPositive(value);
+  Validator isPositive({String? error}) =>
+      (String value) => super._isPositive(value, error: error);
 }

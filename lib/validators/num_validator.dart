@@ -22,91 +22,95 @@ abstract class NumValidator<T extends num> {
   Validator isNegative();
   String get invalidMessage;
 
-  String? _gt(String value, T gt) {
+  String? _gt(String value, T gt, {String? error}) {
     final parsedValue = tryParse(value);
-    if (parsedValue == null) return invalidMessage;
-    return parsedValue > gt ? null : 'Value must be greater than $gt';
+    if (parsedValue == null) return error ?? invalidMessage;
+    return parsedValue > gt ? null : error ?? 'Value must be greater than $gt';
   }
 
-  String? _lt(String value, T lt) {
+  String? _lt(String value, T lt, {String? error}) {
     final parsedValue = tryParse(value);
-    if (parsedValue == null) return invalidMessage;
-    return parsedValue < lt ? null : 'Value must be less than $lt';
+    if (parsedValue == null) return error ?? invalidMessage;
+    return parsedValue < lt ? null : error ?? 'Value must be less than $lt';
   }
 
-  String? _gte(String value, T gte) {
+  String? _gte(String value, T gte, {String? error}) {
     final parsedValue = tryParse(value);
-    if (parsedValue == null) return invalidMessage;
+    if (parsedValue == null) return error ?? invalidMessage;
     return parsedValue >= gte
         ? null
-        : 'Value must be greater than or equal to $gte';
+        : error ?? 'Value must be greater than or equal to $gte';
   }
 
-  String? _lte(String value, T lte) {
+  String? _lte(String value, T lte, {String? error}) {
     final parsedValue = tryParse(value);
-    if (parsedValue == null) return invalidMessage;
+    if (parsedValue == null) return error ?? invalidMessage;
     return parsedValue <= lte
         ? null
-        : 'Value must be less than or equal to $lte';
+        : error ?? 'Value must be less than or equal to $lte';
   }
 
-  String? _eq(String value, T eq) {
+  String? _eq(String value, T eq, {String? error}) {
     final parsedValue = tryParse(value);
-    if (parsedValue == null) return invalidMessage;
-    return parsedValue == eq ? null : 'Value must be equal to $eq';
+    if (parsedValue == null) return error ?? invalidMessage;
+    return parsedValue == eq ? null : error ?? 'Value must be equal to $eq';
   }
 
-  String? _neq(String value, T eq) {
+  String? _neq(String value, T eq, {String? error}) {
     final neq = _eq(value, eq) == null;
-    return neq ? 'Value must not be equal to $eq' : null;
+    return neq ? error ?? 'Value must not be equal to $eq' : null;
   }
 
-  String? _between(String value, T min, T max) {
+  String? _between(String value, T min, T max, {String? error}) {
     final parsedValue = tryParse(value);
-    if (parsedValue == null) return invalidMessage;
+    if (parsedValue == null) return error ?? invalidMessage;
     return parsedValue >= min && parsedValue <= max
         ? null
-        : 'Value must be between $min and $max';
+        : error ?? 'Value must be between $min and $max';
   }
 
-  String? _notBetween(String value, T min, T max) {
+  String? _notBetween(String value, T min, T max, {String? error}) {
     final notBetween = _between(value, min, max) == null;
-    return notBetween ? 'Value must not be between $min and $max' : null;
+    return notBetween
+        ? error ?? 'Value must not be between $min and $max'
+        : null;
   }
 
-  String? _oneOf(String value, List<T> oneOf) {
+  String? _oneOf(String value, List<T> oneOf, {String? error}) {
     final parsedValue = tryParse(value);
-    if (parsedValue == null) return invalidMessage;
+    if (parsedValue == null) return error ?? invalidMessage;
     return oneOf.contains(parsedValue)
         ? null
-        : 'Value must be one of ${oneOf.join(", ")}';
+        : error ?? 'Value must be one of ${oneOf.join(", ")}';
   }
 
-  String? _notOneOf(String value, List<T> oneOf) {
+  String? _notOneOf(String value, List<T> oneOf, {String? error}) {
     final notOneOf = _oneOf(value, oneOf) == null;
-    return notOneOf ? 'Value must not be one of ${oneOf.join(", ")}' : null;
+    return notOneOf
+        ? error ?? 'Value must not be one of ${oneOf.join(", ")}'
+        : null;
   }
 
-  String? _isValid(String value) {
+  String? _isValid(String value, {String? error}) {
     final parsedValue = tryParse(value);
-    if (parsedValue == null) return invalidMessage;
+    if (parsedValue == null) return error ?? invalidMessage;
     return null;
   }
 
-  String? _isNotValid(String value) {
+  String? _isNotValid(String value, {String? error}) {
     final isNotValid = _isValid(value) == null;
-    return isNotValid ? 'Value must not be valid' : null;
+    return isNotValid ? error ?? 'Value must not be valid' : null;
   }
 
-  String? _isPositive(String value) {
+  String? _isPositive(String value, {String? error}) {
     final parsedValue = tryParse(value);
-    if (parsedValue == null) return invalidMessage;
-    return parsedValue > 0 ? null : 'Value must be positive';
+    if (parsedValue == null) return error ?? invalidMessage;
+    return parsedValue > 0 ? null : error ?? 'Value must be positive';
   }
 
-  String? _isNegative(String value) {
+  String? _isNegative(String value, {String? error}) {
     final parsedValue = tryParse(value);
-    if (parsedValue == null) return invalidMessage;
-    return parsedValue < 0 ? null : 'Value must be negative';
+    if (parsedValue == null) return error ?? invalidMessage;
+    return parsedValue < 0 ? null : error ?? 'Value must be negative';
   }
 }

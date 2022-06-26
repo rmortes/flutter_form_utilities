@@ -327,13 +327,13 @@ void main() {
       expect(validator("d"), null);
     });
     test("Is IP", () {
-      final validator1 = validate([ValStr().isIP(IPVersion.ipV4)]);
+      final validator1 = validate([ValStr().isIP(version: IPVersion.ipV4)]);
       expect(validator1("192.168.0.1"), null);
       expect(validator1("192.168.0.999"), "Value must be a valid IP address");
       expect(validator1("hello world"), "Value must be a valid IP address");
       expect(validator1(""), "Value must be a valid IP address");
 
-      final validator2 = validate([ValStr().isIP(IPVersion.ipV6)]);
+      final validator2 = validate([ValStr().isIP(version: IPVersion.ipV6)]);
       expect(validator2("2001:db8:85a3:0:0:8a2e:370:7334"), null);
       expect(validator2("2001:db8:85a3:0:0:8a2e:370:lmao"),
           "Value must be a valid IP address");
@@ -350,13 +350,13 @@ void main() {
       expect(validator3(""), "Value must be a valid IP address");
     });
     test("Is not IP", () {
-      final validator1 = validate([ValStr().isNotIP(IPVersion.ipV4)]);
+      final validator1 = validate([ValStr().isNotIP(version: IPVersion.ipV4)]);
       expect(validator1("192.168.0.1"), "Value must not be a valid IP address");
       expect(validator1("192.168.0.999"), null);
       expect(validator1("hello world"), null);
       expect(validator1(""), null);
 
-      final validator2 = validate([ValStr().isNotIP(IPVersion.ipV6)]);
+      final validator2 = validate([ValStr().isNotIP(version: IPVersion.ipV6)]);
       expect(validator2("2001:db8:85a3:0:0:8a2e:370:7334"),
           "Value must not be a valid IP address");
       expect(validator2("2001:db8:85a3:0:0:8a2e:370:lmao"), null);
@@ -373,12 +373,14 @@ void main() {
       expect(validator3(""), null);
     });
     test("Is ISBN works", () {
-      final validator1 = validate([ValStr().isISBN(ISBNVersion.isbnV10)]);
+      final validator1 =
+          validate([ValStr().isISBN(version: ISBNVersion.isbnV10)]);
       expect(validator1("1363-276-76-X"), null);
       expect(validator1("1363-276-76-9"), "Value must be a valid ISBN");
       expect(validator1("hello world"), "Value must be a valid ISBN");
 
-      final validator2 = validate([ValStr().isISBN(ISBNVersion.isbnV13)]);
+      final validator2 =
+          validate([ValStr().isISBN(version: ISBNVersion.isbnV13)]);
       expect(validator2("978-06-08-06967-8"), null);
       expect(validator2("978-06-08-06967-9"), "Value must be a valid ISBN");
       expect(validator2("hello world"), "Value must be a valid ISBN");
@@ -392,12 +394,14 @@ void main() {
       expect(validator3("hello world"), "Value must be a valid ISBN");
     });
     test("Is not ISBN works", () {
-      final validator1 = validate([ValStr().isNotISBN(ISBNVersion.isbnV10)]);
+      final validator1 =
+          validate([ValStr().isNotISBN(version: ISBNVersion.isbnV10)]);
       expect(validator1("1363-276-76-X"), "Value must not be a valid ISBN");
       expect(validator1("1363-276-76-9"), null);
       expect(validator1("hello world"), null);
 
-      final validator2 = validate([ValStr().isNotISBN(ISBNVersion.isbnV13)]);
+      final validator2 =
+          validate([ValStr().isNotISBN(version: ISBNVersion.isbnV13)]);
       expect(validator2("978-06-08-06967-8"), "Value must not be a valid ISBN");
       expect(validator2("978-06-08-06967-9"), null);
       expect(validator2("hello world"), null);
@@ -572,7 +576,8 @@ void main() {
       expect(validator("hello world"), null);
     });
     test("Is UUID works", () {
-      final validatorUUID3 = validate([ValStr().isUUID(UUIDVersion.uuid3)]);
+      final validatorUUID3 =
+          validate([ValStr().isUUID(version: UUIDVersion.uuid3)]);
       expect(validatorUUID3("a0473a67-27a1-3c05-a2d1-5c134639347f"), null);
       expect(validatorUUID3("a0473a6727a13c05a2d15c134639347f"),
           "Value must be a valid UUID");
@@ -580,7 +585,8 @@ void main() {
           "Value must be a valid UUID");
       expect(validatorUUID3("hello world"), "Value must be a valid UUID");
 
-      final validatorUUID4 = validate([ValStr().isUUID(UUIDVersion.uuid4)]);
+      final validatorUUID4 =
+          validate([ValStr().isUUID(version: UUIDVersion.uuid4)]);
       expect(validatorUUID4("465494e7-f787-4fe3-89e5-75ed359ccd32"), null);
       expect(validatorUUID4("465494e7f7874fe389e575ed359ccd32"),
           "Value must be a valid UUID");
@@ -588,7 +594,8 @@ void main() {
           "Value must be a valid UUID");
       expect(validatorUUID4("hello world"), "Value must be a valid UUID");
 
-      final validatorUUID5 = validate([ValStr().isUUID(UUIDVersion.uuid5)]);
+      final validatorUUID5 =
+          validate([ValStr().isUUID(version: UUIDVersion.uuid5)]);
       expect(validatorUUID5("cfbff0d1-9375-5685-968c-48ce8b15ae17"), null);
       expect(validatorUUID5("cfbff0d193755685968c48ce8b15ae17"),
           "Value must be a valid UUID");
